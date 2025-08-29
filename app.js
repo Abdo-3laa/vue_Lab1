@@ -114,12 +114,17 @@ createApp({
       }
     },
   },
-  computed: {
-    totalPrice() {
-      return this.cart.reduce(
-        (total, item) => total + item.product.price * item.quantity,
-        0
-      );
-    },
+ computed: {
+  totalPrice() {
+    const subtotal = this.cart.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
+    if (this.discount > 0) {
+      return subtotal * (1 - this.discount / 100);
+    }
+    return subtotal;
   },
+},
+
 }).mount("#app");
